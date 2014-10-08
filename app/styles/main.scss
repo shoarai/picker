@@ -90,3 +90,42 @@ body {
     border-bottom: 0;
   }
 }
+
+
+
+
+
+
+body {
+  padding: 0;
+}
+
+#header {
+  height: 44px;
+  background: #333333;
+  color: #ffffff;
+  
+  p {
+    padding: 4px 0 0 0;
+    text-align: center;
+    font-size: 25px;
+  }
+}
+
+#tasks {
+  padding: 0;
+}
+
+.task {
+  width: 100%;
+  padding: 4px;
+  background: #f53455;
+  border: solid 1px #435344;
+  font-size: 20px;
+  list-style: none;
+  word-wrap: break-word;
+  
+  +.done-true {
+    text-decoration: line-through;
+  }
+}

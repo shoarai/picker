@@ -19,6 +19,21 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    <header id="header">
+      <p>picker</p>
+    </header>
+    <article>
+      <input type="text" required placeholder="新しいタスクを入力">
+      <button type="submit">追加</button>
+      <ul id="tasks" ng-controller="mainCtrl">
+        <li class="task done-{{task.done}}" ng-repeat="task in tasks">
+          <input type="checkbox" ng-model="task.done">{{task.body}}
+        </li>
+      </ul>
+    </article>
+    
+    
+    
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
@@ -38,6 +53,25 @@
     </div>
 
 
+    <script>
+      var mainCtrl = function($scope, $http) {
+        $scope.tasks = [
+          {'body':'do this 1', 'done':false},
+          {'body':'do this 2', 'done':false},
+          {'body':'do this 3', 'done':true},
+          {'body':'do this 4', 'done':false},
+        ];
+      };
+    
+      window.onload = function() {
+        // var $tasks = getelementbyid('tasks');
+        // var tasks = document.createElement();
+        // $tasks.appendChild();
+      };
+     
+    </script>
+    
+    
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
