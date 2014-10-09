@@ -22,15 +22,17 @@
     <header id="header">
       <p>picker</p>
     </header>
-    <article>
-      <input type="text" required placeholder="新しいタスクを入力">
-      <button type="submit">追加</button>
-      <ul id="tasks" ng-controller="mainCtrl">
+    <div ng-controller="mainCtrl">
+      <form ng-submit="addNew()">
+        <input type="text" id="input-task" ng-model="newTaskBody" required placeholder="input new task">
+        <button type="submit" id="add-task">add</button>
+      </form>
+      <ul id="tasks">
         <li class="task done-{{task.done}}" ng-repeat="task in tasks">
           <input type="checkbox" ng-model="task.done">{{task.body}}
         </li>
       </ul>
-    </article>
+    </div>
     
     
     
@@ -61,8 +63,12 @@
           {'body':'do this 3', 'done':true},
           {'body':'do this 4', 'done':false},
         ];
+        $scope.addNew = function() {
+          $scope.tasks.push({'body':$scope.newTaskBody, 'done':false});
+          $scope.newTaskBody = '';
+        };
       };
-    
+      
       window.onload = function() {
         // var $tasks = getelementbyid('tasks');
         // var tasks = document.createElement();
