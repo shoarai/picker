@@ -19,6 +19,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+
     <header id="header">
       <p>picker</p>
     </header>
@@ -30,8 +31,10 @@
       <ul id="tasks">
         <li class="task done-{{task.done}}" ng-repeat="task in tasks">
           <input type="checkbox" ng-model="task.done">{{task.body}}
+          <a href ng-click="tasks.splice($index,1)">[x]</a>
         </li>
       </ul>
+      <button ng-click="deleteDone()">delete</button>
     </div>
     
     
@@ -66,6 +69,13 @@
         $scope.addNew = function() {
           $scope.tasks.push({'body':$scope.newTaskBody, 'done':false});
           $scope.newTaskBody = '';
+        };
+        $scope.deleteDone = function() {
+          var oldTasks = $scope.tasks;
+          $scope.tasks = [];
+          angular.forEach(oldTasks, function(task) {
+            if (!task.done) $scope.tasks.push(task);
+          });
         };
       };
       
