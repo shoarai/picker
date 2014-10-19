@@ -27,17 +27,18 @@
     </header>
     <div ng-controller="TaskCtrl">
       <form ng-submit="addNew()">
-        <input type="text" id="input-task" ng-model="newTaskBody" required placeholder="input new task">
+        <textarea id="input-task" ng-model="newTaskBody" required placeholder="input new task"></textarea>
         <button type="submit" id="add-task">add</button>
       </form>
       <ul id="tasks">
         <li class="task done-{{task.done}}" ng-repeat="task in tasks" data-index="{{$index}}">
           <div class="task-header"></div>
-          <input type="checkbox" ng-model="task.done">{{task.body}}
+          <input type="checkbox" class="task-check" ng-model="task.done">
+          <span ng-bind-html="task.body | noHTML | newlines"></span>
           <a href ng-click="tasks.splice($index,1)">[x]</a>
         </li>
       </ul>
-      <button ng-click="deleteDone()">delete</button>
+      <button ng-click="deleteDone()">finish</button>
     </div>
     
     

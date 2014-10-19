@@ -8,8 +8,18 @@
  * Controller of the pickerApp
  */
 angular.module('pickerApp')
-  .controller('TaskCtrl', function ($scope, storage) {
-    
+  // View task in HTML form
+  .filter('noHTML', function() {
+    return function(text) {
+      return text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/, '&amp;');
+    };
+  })
+  .filter('newlines', function($sce) {
+    return function(text) {
+      return $sce.trustAsHtml(text.replace(/\n/g, '<br>'));
+    };
+  })
+  .controller('TaskCtrl', function ($scope, storage) {    
     /**
      * Task sortable object
      * http://rubaxa.github.io/Sortable/
@@ -55,13 +65,7 @@ angular.module('pickerApp')
         return result;
       }
     };
-    
-    // var ele = document.getElementById('sort');
-    // document.getElementById('sort').onclick = function() {
-      TaskSortable.beSortable();
-    // };
-    
-    
+    TaskSortable.beSortable();
     
     
     // Sync the variable and the localStorage
