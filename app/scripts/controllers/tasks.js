@@ -9,43 +9,71 @@
  */
 angular.module('pickerApp')
   .controller('TaskCtrl', function ($scope, storage) {
-   
-    storage.bind($scope, 'tasks', {defaultValue : [], storeName: 'tasks'});
     
+    /**
+     * Task sortable object
+     * http://rubaxa.github.io/Sortable/
+     */
+    var TaskSortable = {
+      mySort: document.getElementById('tasks'),
+      sortable: {},
+      beSortable: function() {
+        var mySort = TaskSortable.mySort;
+        TaskSortable.mySort.classList.add('sortable');
+        TaskSortable.sortable = new Sortable(mySort, {
+          handle: '.task-header',
+          // animation: 1000,
+          onUpdate: function(evt) {
+            // get new sort order based on indexes
+            var newSortIndexes = [],
+                liElements = mySort.getElementsByTagName('li'),
+                i = 0;
+            for (; i < liElements.length; i++) {
+              newSortIndexes.push(liElements[i].getAttribute('data-index'));
+            }
+            
+            // process change
+            $scope.newSortIndexes = newSortIndexes;
+            $scope.tasks = TaskSortable._getSorted($scope.tasks, newSortIndexes);
+            $scope.$apply();
+            
+            // console.log(localStorage);
+          }
+        });
+      },
+      beNotSortable: function() {
+        if (!TaskSortable.sortable.destroy) return;
+        TaskSortable.sortable.destroy();
+        TaskSortable.mySort.classList.remove('sortable');
+      },
+      _getSorted: function(arr, sortArr) {
+        var result = [],
+            i = 0;
+        for(; i < arr.length; i++) {
+          result[i] = arr[sortArr[i]];
+        }
+        return result;
+      }
+    };
+    
+    // var ele = document.getElementById('sort');
+    // document.getElementById('sort').onclick = function() {
+      TaskSortable.beSortable();
+    // };
+    
+    
+    
+    
+    // Sync the variable and the localStorage
+    storage.bind($scope, 'tasks', {defaultValue: [], storeName: 'tasks'});
+    
+    // for debug: init task
     // $scope.tasks = [
       // {'body':'do this 1', 'done':false},
       // {'body':'do this 2', 'done':false},
       // {'body':'do this 3', 'done':true},
       // {'body':'do this 4', 'done':false},
     // ];
-    
-    function getSorted(arr, sortArr) {
-      var result = [],
-          i = 0;
-      for(; i < arr.length; i++) {
-        result[i] = arr[sortArr[i]];
-      }
-      return result;
-    }
-    
-    var mySort = document.getElementById("tasks");
-    new Sortable(mySort, {
-      onUpdate: function(evt) {
-        // get new sort order based on indexes
-        var newSortIndexes = [],
-            liElements = mySort.getElementsByTagName("li"),
-            i = 0;
-        for (; i < liElements.length; i++) {
-          newSortIndexes.push(liElements[i].getAttribute('data-index'));
-        }
-        
-        // process change
-        $scope.newSortIndexes = newSortIndexes;
-        $scope.tasks = getSorted($scope.tasks, newSortIndexes);
-        $scope.$apply();
-      }
-    });
-    
     
     $scope.addNew = function() {
       $scope.tasks.push({

@@ -111,11 +111,15 @@ body {
     color: #ffffff;
   }
   
-  #reload {
-    float: right;
+  button {
     width: 40px;
     height: 40px;
     margin: 2px;
+    float: left;
+  }
+  
+  #reload {
+    float: right;
   }
 }
 
@@ -134,10 +138,17 @@ body {
 }
 
 .sortable {
-  cursor: move;  
+  cursor: move;
 }
 
-.task.done-true {
+.task-header {
+  width: 20px;
+  height: 30px;
+  float: left;
+  background: #523452;
+}
+
+.done-true {
   text-decoration: line-through;
 }
  
