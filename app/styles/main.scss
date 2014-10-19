@@ -124,11 +124,12 @@ body {
   list-style: none;
   word-wrap: break-word;
   
-  +.done-true {
-    text-decoration: line-through;
-  }
 }
 
+.task.done-true {
+  text-decoration: line-through;
+}
+ 
 #input-task {
   width: 75%;
 }
