@@ -8,7 +8,7 @@
  * Controller of the pickerApp
  */
 angular.module('pickerApp')
-  .controller('mainCtrl', function ($scope, storage) {
+  .controller('TaskCtrl', function ($scope, storage) {
    
     storage.bind($scope, 'tasks', {defaultValue : []});
     
