@@ -9,27 +9,27 @@
  */
 angular.module('pickerApp')
   // View task in HTML form
+  // http://qiita.com/izumin5210/items/1b9fe7d2f851ba95136b
   .filter('noHTML', function() {
     return function(text) {
       return text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/, '&amp;');
     };
   })
+  // Transform newlines of task to <br>
   .filter('newlines', function($sce) {
     return function(text) {
       return $sce.trustAsHtml(text.replace(/\n/g, '<br>'));
     };
   })
-  .controller('TaskCtrl', function ($scope, storage) {    
+  .controller('TaskCtrl', ['$scope', 'storage', function($scope, storage) {    
     /**
      * Task sortable object
      * http://rubaxa.github.io/Sortable/
      */
     var TaskSortable = {
-      mySort: document.getElementById('tasks'),
       sortable: {},
       beSortable: function() {
-        var mySort = TaskSortable.mySort;
-        TaskSortable.mySort.classList.add('sortable');
+        var mySort = document.getElementById('tasks');
         TaskSortable.sortable = new Sortable(mySort, {
           handle: '.task-header',
           // animation: 1000,
@@ -54,7 +54,6 @@ angular.module('pickerApp')
       beNotSortable: function() {
         if (!TaskSortable.sortable.destroy) return;
         TaskSortable.sortable.destroy();
-        TaskSortable.mySort.classList.remove('sortable');
       },
       _getSorted: function(arr, sortArr) {
         var result = [],
@@ -99,4 +98,4 @@ angular.module('pickerApp')
       'AngularJS',
       'Karma'
     ];
-  });
+  }]);
