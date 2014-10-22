@@ -129,7 +129,6 @@ body {
 
 .task {
   width: 100%;
-  // padding: 4px;
   // background: #f53455;
   border: solid 1px #dddddd;
   font-size: 18px;
@@ -149,14 +148,14 @@ body {
   list-style:none;
   box-sizing:border-box;
 }
-.animate-repeat.ng-move,
+// .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
   -webkit-transition: all linear 0.5s;
   transition:all linear 0.5s;
 }
 
-.animate-repeat.ng-move,
+// .animate-repeat.ng-move,
 .animate-repeat.ng-enter {
   max-height: 0;
 }
@@ -167,25 +166,26 @@ body {
 }
 
 .animate-repeat.ng-leave,
-.animate-repeat.ng-move.ng-move-active,
+// .animate-repeat.ng-move.ng-move-active,
 .animate-repeat.ng-enter.ng-enter-active {
   opacity:1;
   max-height:40px;
 }
 
 .task-header {
-  cursor: move;
-}
-
-.task-header {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 40px;
   float: left;
   background: #523452;
+  cursor: move;
 }
 
 .done-true {
   text-decoration: line-through;
+}
+
+.task-body {
+  padding: 0 0 0 5px;
 }
 
 .task-check {
@@ -197,7 +197,7 @@ body {
 }
 
 #add-task {
-  width: 80px;
+  width: 20%;
   float: right;
 }
 

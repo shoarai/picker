@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>picker</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -18,8 +18,9 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-
+    
+    
+    
     <header id="header">
       <!-- <button id="sort">sort</button> -->
       <button id="reload" onclick="location.reload()">load</button>
@@ -29,17 +30,30 @@
       <form ng-submit="addNew()">
         <textarea id="input-task" ng-model="newTaskBody" required placeholder="input new task"></textarea>
         <button type="submit" id="add-task">add</button>
+        <p cm-editable-text ng-model="testValue"></p>
       </form>
+      <!-- <table id="tasks">
+        <tr class="task done-{{task.done}} animate-repeat" ng-repeat="task in tasks" data-index="{{$index}}">
+          <td class="task-header"></td>
+          <td>
+            <input type="checkbox" class="task-check" ng-model="task.done">
+            <span ng-bind-html="task.body | noHTML | newlines"></span>
+            <a href ng-click="tasks.splice($index,1)">[x]</a>
+          </td>
+        </tr>
+      </table> -->
       <ul id="tasks">
-        <li class="task done-{{task.done}} animate-repeat" ng-repeat="task in tasks" data-index="{{$index}}">
+        <li class="task done-{{task.done}} animate-repeat"
+            ng-repeat="task in tasks" data-index="{{$index}}" ng-click="onclickTask($index)">
           <div class="task-header"></div>
-          <input type="checkbox" class="task-check" ng-model="task.done">
-          <span ng-bind-html="task.body | noHTML | newlines"></span>
-          <a href ng-click="tasks.splice($index,1)">[x]</a>
+          <!-- <input type="checkbox" class="task-check" ng-model="task.done"> -->
+          <span class="task-body" ng-bind-html="task.body | noHTML | newlines"></span>
+          <!-- <a href ng-click="tasks.splice($index,1)">[x]</a> -->
         </li>
       </ul>
       <button id="finish" ng-click="deleteDone()">finish</button>
     </div>
+    
     
     
     <!-- Add your site or application content here -->
