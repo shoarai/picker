@@ -48,7 +48,7 @@
           <div class="task-header"></div>
           <!-- <input type="checkbox" class="task-check" ng-model="task.done"> -->
           <span class="task-body" ng-bind-html="task.body | noHTML | newlines"></span>
-          <!-- <a href ng-click="tasks.splice($index,1)">[x]</a> -->
+          <!-- <a href ng-click="remove($index)">[x]</a> -->
         </li>
       </ul>
       <button id="finish" ng-click="deleteDone()">finish</button>

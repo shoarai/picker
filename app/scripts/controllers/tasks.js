@@ -163,6 +163,11 @@ angular.module('pickerApp')
       });
       $scope.newTaskBody = '';
     };
+        
+    // Delete a task
+    $scope.remove = function(index) {
+      $scope.tasks.splice(index, 1);
+    };
     
     // Delete fixed tasks
     $scope.deleteDone = function() {
@@ -176,6 +181,8 @@ angular.module('pickerApp')
     // Fix clicked task
     $scope.onclickTask = function(index) {
       $scope.tasks[index].done = !$scope.tasks[index].done;
+      
+      
       
       // Check disable of finishing button
 /*      var element = document.getElementById('finish');
