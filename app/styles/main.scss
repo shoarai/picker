@@ -96,6 +96,10 @@ body {
 
 
 
+button:disabled {
+  opacity: 0.8;
+}
+
 body {
   padding: 0;
 }
@@ -134,6 +138,10 @@ body {
   font-size: 18px;
   list-style: none;
   word-wrap: break-word;
+}
+
+.sortable-ghost {
+  background: #dddddd;
 }
 
 .example-animate-container {

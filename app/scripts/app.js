@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'angularLocalStorage'
+    'angularLocalStorage',
+    'angular-gestures'
   ])
   .config(function ($routeProvider) {
     $routeProvider

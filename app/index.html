@@ -27,6 +27,7 @@
       <p>picker</p>
     </header>
     <div ng-controller="TaskCtrl">
+      <button id="test-add" ng-click="testAdd()">testAdd</button>
       <form ng-submit="addNew()">
         <textarea id="input-task" ng-model="newTaskBody" required placeholder="input new task"></textarea>
         <button type="submit" id="add-task">add</button>
@@ -44,10 +45,11 @@
       </table> -->
       <ul id="tasks">
         <li class="task done-{{task.done}} animate-repeat"
-            ng-repeat="task in tasks" data-index="{{$index}}" ng-click="onclickTask($index)">
+            ng-repeat="task in tasks" data-index="{{$index}}"
+            ng-click="onclickTask($index)">
           <div class="task-header"></div>
           <!-- <input type="checkbox" class="task-check" ng-model="task.done"> -->
-          <span class="task-body" ng-bind-html="task.body | noHTML | newlines"></span>
+          <span class="task-body" ng-bind-html="task.body | noHTML | newlines" hm-double-tap="onDoubleTap()" hm-drag-start="onSwipeRight($index)" hm-drag-end="onSwipeRight($index)"></span>
           <!-- <a href ng-click="remove($index)">[x]</a> -->
         </li>
       </ul>
@@ -57,7 +59,7 @@
     
     
     <!-- Add your site or application content here -->
-    <div class="container">
+    <!-- <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#">Home</a></li>
@@ -72,12 +74,12 @@
       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
       </div>
-    </div>
+    </div> -->
 
 
     <script>
       window.onload = function() {
-        console.log(localStorage);
+        // console.log(localStorage);
         // var $tasks = getelementbyid('tasks');
         // var tasks = document.createElement();
         // $tasks.appendChild();
@@ -128,6 +130,9 @@
     <script src="bower_components/angularLocalStorage/src/angularLocalStorage.js"></script>
     <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/Sortable/Sortable.js"></script>
+    <script src="bower_components/hammerjs/hammer.js"></script>
+    <script src="bower_components/angular-gestures/src/gestures.js"></script>
+    <script src="bower_components/angular-gestures/gestures.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

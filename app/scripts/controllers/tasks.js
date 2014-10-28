@@ -32,9 +32,8 @@ angular.module('pickerApp')
           element.html(ngModel.$viewValue);
         };
         
-        element.on('click', function() {
+        element.on('hmTap', function() {
         // element.on('dblclick', function() {
-          console.log('test');
           var clickTarget = angular.element(this);
           var EDITING_PROP = 'editing';
           
@@ -98,6 +97,19 @@ angular.module('pickerApp')
     $scope.testValue = 'double click me!';
     
     // return;
+    
+    
+    var taskElements = document.getElementsByClassName('task');
+    console.log(taskElements);
+    var i = 0;
+    for (; i < taskElements.length; i++) {
+      console.log(element);
+      taskElements[i].onclick = function() {
+        alert('test');
+      };
+    };
+    
+    
     /**
      * Task sortable object
      * https://github.com/RubaXa/Sortable
@@ -108,6 +120,7 @@ angular.module('pickerApp')
         var mySort = document.getElementById('tasks');
         TaskSortable.sortable = new Sortable(mySort, {
           handle: '.task-header',
+          ghostClass: "sortable-ghost",
           // animation: 1000,
           onUpdate: function(evt) {
             // get new sort order based on indexes
@@ -154,6 +167,20 @@ angular.module('pickerApp')
       // {'body':'do this 4', 'done':false},
     // ];
     
+    
+    //  for debug: Add new tasks
+    $scope.testAdd = function() {
+      var testTask = 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
+          num = 5,
+          i = 0;
+      for (; i < num; i++) {
+        $scope.tasks.push({
+          'body': i+testTask,
+          'done': false
+        });
+      };
+    };
+    
     // Add new task
     $scope.addNew = function() {
       if (!$scope.newTaskBody) return;
@@ -182,18 +209,29 @@ angular.module('pickerApp')
     $scope.onclickTask = function(index) {
       $scope.tasks[index].done = !$scope.tasks[index].done;
       
-      
+      // var ele =  document.getElementById('finish');
+      // ele.disabled = 'true';
       
       // Check disable of finishing button
 /*      var element = document.getElementById('finish');
       element.disabled = true;
-      return;
       angular.forEach($scope.tasks, function(task) {
-        if (!task.done) element.disabled = false;
-        
+        if (task.done) {
+          element.disabled = false;
+          return;
+        }
       });*/
     };
     
+    $scope.onDoubleTap = function() {
+      alert('onDoubleTap');
+    };
+    
+    
+    $scope.onSwipeRight = function(index) {
+      console.log(index);
+      alert('onSwipeRight');
+    };
     
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
