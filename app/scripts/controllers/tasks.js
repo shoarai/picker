@@ -155,6 +155,21 @@ angular.module('pickerApp')
     };
     TaskSortable.beSortable();
     
+    $scope.dragControlListeners = {
+      accept: function(sourceItemHandleScope, destSortableScope) {
+        return true;
+      },
+      itemMoved: function(event) {
+        console.log('event');
+        // event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.column.name;
+      },
+      orderChanged: function(event) {
+        console.log('event');
+      },
+      containment: '#board'//optional param.
+    };
+    
+    
     
     // Sync the variable and the localStorage
     storage.bind($scope, 'tasks', {defaultValue: [], storeName: 'tasks'});

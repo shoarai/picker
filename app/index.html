@@ -8,6 +8,8 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.css" />
+    <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.style.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -43,13 +45,30 @@
           </td>
         </tr>
       </table> -->
+      
+      <!-- <table data-as-sortable="board.dragControlListeners" data-ng-model="tasks">
+         <tr data-ng-repeat="task in tasks" data-as-sortable-item>
+            <td class="task-header" data-as-sortable-item-handle></td>
+            <td class="task-body" ng-bind-html="task.body | noHTML | newlines"></td>
+         </tr>
+      </table> -->
+      <div data-as-sortable="board.dragControlListeners" data-ng-model="tasks">
+         <div class="task" data-ng-repeat="task in tasks" data-as-sortable-item>
+            <div class="task-header" data-as-sortable-item-handle></div>
+            <div class="task-body" ng-bind-html="task.body | noHTML | newlines"
+                 hm-double-tap="onDoubleTap()"></div>
+         </div>
+      </div>
+      <p>■■■<br>■■■<br>■■■<br>■■■<br>■■■</p>
       <ul id="tasks">
         <li class="task done-{{task.done}} animate-repeat"
             ng-repeat="task in tasks" data-index="{{$index}}"
             ng-click="onclickTask($index)">
           <div class="task-header"></div>
           <!-- <input type="checkbox" class="task-check" ng-model="task.done"> -->
-          <span class="task-body" ng-bind-html="task.body | noHTML | newlines" hm-double-tap="onDoubleTap()" hm-drag-start="onSwipeRight($index)" hm-drag-end="onSwipeRight($index)"></span>
+          <span class="task-body" ng-bind-html="task.body | noHTML | newlines"
+                hm-double-tap="onDoubleTap()" hm-drag-start="onSwipeRight($index)"
+                hm-drag-end="onSwipeRight($index)"></span>
           <!-- <a href ng-click="remove($index)">[x]</a> -->
         </li>
       </ul>
@@ -131,8 +150,8 @@
     <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/Sortable/Sortable.js"></script>
     <script src="bower_components/hammerjs/hammer.js"></script>
-    <script src="bower_components/angular-gestures/src/gestures.js"></script>
     <script src="bower_components/angular-gestures/gestures.js"></script>
+    <script src="bower_components/ng-sortable/dist/ng-sortable.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
