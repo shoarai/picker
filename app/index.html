@@ -26,6 +26,7 @@
     <header id="header">
       <!-- <button id="sort">sort</button> -->
       <button id="reload" onclick="location.reload()">load</button>
+      <input type="checkbox" id="toggle-order" ng-model="sortFlag">
       <p>picker</p>
     </header>
     <div ng-controller="TaskCtrl">
@@ -35,30 +36,18 @@
         <button type="submit" id="add-task">add</button>
         <p cm-editable-text ng-model="testValue"></p>
       </form>
-      <!-- <table id="tasks">
-        <tr class="task done-{{task.done}} animate-repeat" ng-repeat="task in tasks" data-index="{{$index}}">
-          <td class="task-header"></td>
-          <td>
-            <input type="checkbox" class="task-check" ng-model="task.done">
-            <span ng-bind-html="task.body | noHTML | newlines"></span>
-            <a href ng-click="tasks.splice($index,1)">[x]</a>
-          </td>
-        </tr>
-      </table> -->
       
-      <!-- <table data-as-sortable="board.dragControlListeners" data-ng-model="tasks">
-         <tr data-ng-repeat="task in tasks" data-as-sortable-item>
-            <td class="task-header" data-as-sortable-item-handle></td>
-            <td class="task-body" ng-bind-html="task.body | noHTML | newlines"></td>
-         </tr>
-      </table> -->
+      <!-- Task list -->
       <div data-as-sortable="board.dragControlListeners" data-ng-model="tasks">
-         <div class="task" data-ng-repeat="task in tasks" data-as-sortable-item>
-            <div class="task-header" data-as-sortable-item-handle></div>
-            <div class="task-body" ng-bind-html="task.body | noHTML | newlines"
-                 hm-double-tap="onDoubleTap()"></div>
-         </div>
+        <div class="task" data-ng-repeat="task in tasks" data-as-sortable-item>
+          <div class="task-head">・</div>
+          <div class="task-header" data-as-sortable-item-handle ng-show="sortFlag"></div>
+          <div class="task-body" ng-bind-html="task.body | noHTML | newlines"
+               hm-double-tap="onDoubleTap()"></div>
+        </div>
       </div>
+      
+      
       <p>■■■<br>■■■<br>■■■<br>■■■<br>■■■</p>
       <ul id="tasks">
         <li class="task done-{{task.done}} animate-repeat"

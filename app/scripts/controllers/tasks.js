@@ -22,6 +22,18 @@ angular.module('pickerApp')
     };
   })
   
+  .directive('myngOrderOn', function() {
+    return {
+      restrict: 'A',
+      // require : '^ngModel',
+      link : function(scope, element, attrs) {
+        element.on('click', function() {
+          angular.element(element);
+        });
+      }
+    };
+  })
+   
   // http://dev.classmethod.jp/etc/angularjscmeditabletext/
   .directive('cmEditableText', function() {
     return {
@@ -155,7 +167,7 @@ angular.module('pickerApp')
     };
     TaskSortable.beSortable();
     
-    $scope.dragControlListeners = {
+/*    $scope.dragControlListeners = {
       accept: function(sourceItemHandleScope, destSortableScope) {
         return true;
       },
@@ -168,7 +180,7 @@ angular.module('pickerApp')
       },
       containment: '#board'//optional param.
     };
-    
+*/ 
     
     
     // Sync the variable and the localStorage

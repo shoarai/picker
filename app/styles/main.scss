@@ -115,27 +115,27 @@ body {
     color: #ffffff;
   }
   
-  button {
+  button,input {
     width: 40px;
     height: 40px;
     margin: 2px;
-    float: left;
-  }
-  
-  #reload {
     float: right;
   }
 }
 
 #tasks {
-  padding: 0;
+  padding: 0;;
+  // margin: 0 44px 0 0;
 }
 
 .task {
   width: 100%;
   // background: #f53455;
   margin: 0;
-  border: solid 1px #dddddd;
+  border-top: solid 1px #dddddd;
+  border-bottom: solid 1px #dddddd;
+  border-right: none;
+  border-left: none;
   border-radius: 0;
   font-size: 18px;
   // list-style: none;
@@ -182,11 +182,20 @@ body {
   max-height:40px;
 }
 
+
+$task-margin-right: 32px;
+$task-margin-left: 10px;
+
+.task-head {
+  width: $task-margin-left;
+  float: left;
+}
+
 .task-header {
-  width: 28px;
+  width: $task-margin-right;
   height: 26px;
   // height: 100%;
-  float: left;
+  float: right;
   background: #523452;
   cursor: move;
 }
@@ -196,7 +205,7 @@ body {
 }
 
 .task-body {
-  margin: 0 0 0 25px;
+  margin: 0 $task-margin-right 0 $task-margin-left;
   padding: 0 0 0 5px;
 }
 
