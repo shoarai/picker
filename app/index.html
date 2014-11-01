@@ -50,7 +50,7 @@
                myng-editable
                ng-click="onclickTask($index)"
                hm-double-tap="editable=true">
-            <span ng-bind-html="task.body | noHTML | newlines" ng-hide="editable"></span>
+            <p ng-bind-html="task.body | noHTML | newlines" ng-hide="editable"></p>
             <textarea ng-model="task.body" ng-show="editable"
                       ng-blur="editable=false"
                       focus-on-visibility msd-elastic></textarea>
@@ -99,8 +99,12 @@
 
 
     <script>
+      window.log = function() {
+        console.log.apply(console, arguments);
+      };
+      
       window.onload = function() {
-        // console.log(localStorage);
+        // log(localStorage);
       };
     </script>
     

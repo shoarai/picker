@@ -162,6 +162,17 @@ body {
   .task-body {
     margin: 0 $task-margin-right 0 $task-margin-left;
     padding: 0 0 0 5px;
+    
+    p {
+      margin: 0;
+    }
+    
+    textarea {
+      width: 100%;
+      margin: 0 0 -8px 0;
+      padding: 0;
+      resize: none;
+    }
   }
 }
 
