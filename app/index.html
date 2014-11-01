@@ -26,7 +26,7 @@
     <header id="header">
       <!-- <button id="sort">sort</button> -->
       <button id="reload" onclick="location.reload()">load</button>
-      <input type="checkbox" id="toggle-order" ng-model="sortFlag">
+      <input type="checkbox" id="toggle-order" ng-model="sortable">
       <p>picker</p>
     </header>
     <div ng-controller="TaskCtrl">
@@ -34,7 +34,8 @@
       <!-- Add task area -->
       <button id="test-add" ng-click="testAdd()">testAdd</button>
       <form ng-submit="addNew()">
-        <textarea id="input-task" ng-model="newTaskBody" required placeholder="input new task"></textarea>
+        <textarea id="input-task" ng-model="newTaskBody" required placeholder="input new task"
+                  msd-elastic></textarea>
         <button type="submit" id="add-task">add</button>
         <p cm-editable-text ng-model="testValue"></p>
       </form>
@@ -44,38 +45,38 @@
       <div data-ng-model="tasks" data-as-sortable="board.dragControlListeners">
         <div class="task" data-ng-repeat="task in tasks" data-as-sortable-item>
           <div class="task-head">・</div>
-          <div class="task-header" ng-show="sortFlag" data-as-sortable-item-handle></div>
+          <div class="task-header" ng-show="sortable" data-as-sortable-item-handle></div>
           <div class="task-body done-{{task.done}}"
                myng-editable
                ng-click="onclickTask($index)"
                hm-double-tap="editable=true">
             <span ng-bind-html="task.body | noHTML | newlines" ng-hide="editable"></span>
-            <textarea ng-bind-html="task.body | nolines"
-                      ng-show="editable" ng-blur="editable=false" ng-model="task.body"
-                      focus-on-visibility></textarea>
+            <textarea ng-model="task.body" ng-show="editable"
+                      ng-blur="editable=false"
+                      focus-on-visibility msd-elastic></textarea>
+          <!-- <a href ng-click="remove($index)">[x]</a> -->
           </div>
         </div>
       </div>
       
       
       
-      
+      <!-- 
       <p>■■■<br>■■■<br>■■■<br>■■■<br>■■■</p>
       <ul id="tasks">
         <li class="task done-{{task.done}} animate-repeat"
             ng-repeat="task in tasks" data-index="{{$index}}"
             ng-click="onclickTask($index)">
           <div class="task-header"></div>
-          <!-- <input type="checkbox" class="task-check" ng-model="task.done"> -->
+          <input type="checkbox" class="task-check" ng-model="task.done">
           <span class="task-body" ng-bind-html="task.body | noHTML | newlines"
                 hm-double-tap="onDoubleTap()" hm-drag-start="onSwipeRight($index)"
                 hm-drag-end="onSwipeRight($index)"></span>
-          <!-- <a href ng-click="remove($index)">[x]</a> -->
         </li>
-      </ul>
+      </ul>-->
       <button id="finish" ng-click="deleteDone()">finish</button>
     </div>
-    
+     
     
     
     <!-- Add your site or application content here -->
@@ -100,9 +101,6 @@
     <script>
       window.onload = function() {
         // console.log(localStorage);
-        // var $tasks = getelementbyid('tasks');
-        // var tasks = document.createElement();
-        // $tasks.appendChild();
       };
     </script>
     
@@ -153,6 +151,7 @@
     <script src="bower_components/hammerjs/hammer.js"></script>
     <script src="bower_components/angular-gestures/gestures.js"></script>
     <script src="bower_components/ng-sortable/dist/ng-sortable.js"></script>
+    <script src="bower_components/angular-elastic/elastic.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

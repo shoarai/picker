@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'angularLocalStorage',
     'angular-gestures',
-    'ui.sortable'
+    'ui.sortable',
+    'monospaced.elastic'
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -100,7 +100,7 @@ angular.module('pickerApp')
         return result;
       }
     };
-    TaskSortable.beSortable();
+    // TaskSortable.beSortable();
     
 /*    $scope.dragControlListeners = {
       accept: function(sourceItemHandleScope, destSortableScope) {
