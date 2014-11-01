@@ -21,98 +21,33 @@ angular.module('pickerApp')
       return $sce.trustAsHtml(text.replace(/\n/g, '<br>'));
     };
   })
+  // Transform newlines of task to <br>
+  .filter('nolines', function($sce) {
+    return function(text) {
+      return $sce.trustAsHtml(text.replace('<br>', /\n/g));
+    };
+  })
   
-  .directive('myngOrderOn', function() {
-    return {
-      restrict: 'A',
-      // require : '^ngModel',
-      link : function(scope, element, attrs) {
-        element.on('click', function() {
-          angular.element(element);
-        });
-      }
+  /**
+   * Focus when showed
+   * http://stackoverflow.com/questions/22776662/catch-ng-show-event-and-focus-input-field 
+   */
+  .directive('focusOnVisibility', function () {
+    return function (scope, element, attrs) {
+      scope.$watch('editable', function () {
+        if (scope.editable === true) {
+          element.focus();
+        }
+      });
     };
   })
-   
-  // http://dev.classmethod.jp/etc/angularjscmeditabletext/
-  .directive('cmEditableText', function() {
-    return {
-      restrict: 'A',
-      require : '^ngModel',
-      link    : function(scope, element, attrs, ngModel) {
-        ngModel.$render = function() {
-          element.html(ngModel.$viewValue);
-        };
-        
-        element.on('hmTap', function() {
-        // element.on('dblclick', function() {
-          var clickTarget = angular.element(this);
-          var EDITING_PROP = 'editing';
-          
-          if ( !clickTarget.hasClass(EDITING_PROP) ) {
-            clickTarget.addClass(EDITING_PROP);
-            clickTarget.html('<textarea id="ta">' + ngModel.$viewValue + '</textarea>');
-            
-            
-            // Adjust height of textarea by input
-            // http://qiita.com/YoshiyukiKato/items/507b8022e6df5e996a59
-/*            var ta = document.getElementById("input-task");
-            ta.style.lineHeight = "20px";
-            ta.style.height = "30px";
-            ta.addEventListener("input",function(evt){
-                if(evt.target.scrollHeight > evt.target.offsetHeight){   
-                    evt.target.style.height = evt.target.scrollHeight + "px";
-                }else{
-                    var height,lineHeight;
-                    while (true){
-                        height = Number(evt.target.style.height.split("px")[0]);
-                        lineHeight = Number(evt.target.style.lineHeight.split("px")[0]);
-                        evt.target.style.height = height - lineHeight + "px"; 
-                        if(evt.target.scrollHeight > evt.target.offsetHeight){
-                            evt.target.style.height = evt.target.scrollHeight + "px";
-                            break;
-                        }
-                    }
-                }
-            });*/
-            
-            
-            
-            var inputElement = clickTarget.children();
-            
-            inputElement.on('focus', function() {
-              inputElement.on('blur', function() {
-                var inputValue = inputElement.val() || this.defaultValue;
-                clickTarget.removeClass(EDITING_PROP).text(inputValue);
-                inputElement.off();
-                scope.$apply(function() {
-                  ngModel.$setViewValue(inputValue);
-                });
-              });
-            });
-            inputElement[0].focus();
-          }
-        });
-
-        var destroyWatcher = scope.$on('$destroy', function() {
-          if ( angular.equals(destroyWatcher, null) ) {
-            return;
-          }
-          element.off();
-          destroyWatcher();
-          destroyWatcher = null;
-        });
-      }
-    };
-  })
+  
+  
+  
   .controller('TaskCtrl', ['$scope', 'storage', function($scope, storage) {
     $scope.testValue = 'double click me!';
     
-    // return;
-    
-    
     var taskElements = document.getElementsByClassName('task');
-    console.log(taskElements);
     var i = 0;
     for (; i < taskElements.length; i++) {
       console.log(element);
@@ -250,10 +185,33 @@ angular.module('pickerApp')
       });*/
     };
     
-    $scope.onDoubleTap = function() {
-      alert('onDoubleTap');
+    $scope.onDoubleTap = function(index) {
+      
+      
+      
+      var clickTarget = this.element.find('span');
+      console.log(clickTarget);
+      var EDITING_PROP = 'editing';
+      if ( !clickTarget.hasClass(EDITING_PROP) ) {
+        clickTarget.addClass(EDITING_PROP);
+        clickTarget.append('<input type="text" value="' + $scope.tasks[index].body + '" />');
+        var inputElement = clickTarget.children();
+        inputElement.on('focus', function() {
+          inputElement.on('blur', function() {
+            var inputValue = inputElement.val() || this.defaultValue;
+            
+            // log(inputValue);
+            
+            clickTarget.removeClass(EDITING_PROP).text(inputValue);
+            inputElement.off();
+            $scope.$apply(function() {
+              $scope.tasks[index].body = inputValue;
+            });
+          });
+        });
+        inputElement[0].focus();
+      }
     };
-    
     
     $scope.onSwipeRight = function(index) {
       console.log(index);

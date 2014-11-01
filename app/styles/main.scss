@@ -140,6 +140,29 @@ body {
   font-size: 18px;
   // list-style: none;
   word-wrap: break-word;
+  
+
+  $task-margin-right: 32px;
+  $task-margin-left: 10px;
+  
+  .task-head {
+    width: $task-margin-left;
+    float: left;
+  }
+  
+  .task-header {
+    width: $task-margin-right;
+    height: 26px;
+    // height: 100%;
+    float: right;
+    background: #523452;
+    cursor: move;
+  }
+
+  .task-body {
+    margin: 0 $task-margin-right 0 $task-margin-left;
+    padding: 0 0 0 5px;
+  }
 }
 
 .sortable-ghost {
@@ -183,30 +206,8 @@ body {
 }
 
 
-$task-margin-right: 32px;
-$task-margin-left: 10px;
-
-.task-head {
-  width: $task-margin-left;
-  float: left;
-}
-
-.task-header {
-  width: $task-margin-right;
-  height: 26px;
-  // height: 100%;
-  float: right;
-  background: #523452;
-  cursor: move;
-}
-
 .done-true {
   text-decoration: line-through;
-}
-
-.task-body {
-  margin: 0 $task-margin-right 0 $task-margin-left;
-  padding: 0 0 0 5px;
 }
 
 .task-check {

@@ -30,6 +30,8 @@
       <p>picker</p>
     </header>
     <div ng-controller="TaskCtrl">
+      
+      <!-- Add task area -->
       <button id="test-add" ng-click="testAdd()">testAdd</button>
       <form ng-submit="addNew()">
         <textarea id="input-task" ng-model="newTaskBody" required placeholder="input new task"></textarea>
@@ -37,15 +39,25 @@
         <p cm-editable-text ng-model="testValue"></p>
       </form>
       
+      
       <!-- Task list -->
-      <div data-as-sortable="board.dragControlListeners" data-ng-model="tasks">
+      <div data-ng-model="tasks" data-as-sortable="board.dragControlListeners">
         <div class="task" data-ng-repeat="task in tasks" data-as-sortable-item>
           <div class="task-head">・</div>
-          <div class="task-header" data-as-sortable-item-handle ng-show="sortFlag"></div>
-          <div class="task-body" ng-bind-html="task.body | noHTML | newlines"
-               hm-double-tap="onDoubleTap()"></div>
+          <div class="task-header" ng-show="sortFlag" data-as-sortable-item-handle></div>
+          <div class="task-body done-{{task.done}}"
+               myng-editable
+               ng-click="onclickTask($index)"
+               hm-double-tap="editable=true">
+            <span ng-bind-html="task.body | noHTML | newlines" ng-hide="editable"></span>
+            <textarea ng-bind-html="task.body | nolines"
+                      ng-show="editable" ng-blur="editable=false" ng-model="task.body"
+                      focus-on-visibility></textarea>
+          </div>
         </div>
       </div>
+      
+      
       
       
       <p>■■■<br>■■■<br>■■■<br>■■■<br>■■■</p>
