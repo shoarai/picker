@@ -21,12 +21,6 @@ angular.module('pickerApp')
       return $sce.trustAsHtml(text.replace(/\n/g, '<br>'));
     };
   })
-  // Transform newlines of task to <br>
-  .filter('nolines', function($sce) {
-    return function(text) {
-      return $sce.trustAsHtml(text.replace('<br>', /\n/g));
-    };
-  })
   
   /**
    * Focus when showed
@@ -43,6 +37,50 @@ angular.module('pickerApp')
   })
   
   
+  .directive('moveTask', function () {
+    return {
+      restrict: 'A',
+      link    : function(scope, element, attrs) {
+        var startLeft = 0;
+        var maxLeft = 90;
+        var minLeft = -90;
+        
+        element.on('touchstart', function(element) {
+          startLeft = element.originalEvent.changedTouches[0].clientX;
+        });
+        element.on('touchmove', function(element) {
+          var left = startLeft - element.originalEvent.changedTouches[0].clientX;
+          left *= 1.2;
+          if (maxLeft < left) {
+            left = maxLeft;
+          } else if (minLeft > left) {
+            left = minLeft;
+          }
+          element.currentTarget.style.marginLeft = left+'px';
+        });
+        element.on('touchend', function(element) {
+          var left = element.currentTarget.style.marginLeft;
+          log(scope.task);
+          if (left === maxLeft+'px') {
+            if (scope.task.done) {
+              // todo: remove
+            } else {
+              scope.task.done = true;
+              scope.$apply();
+            }
+          } else if (left === minLeft+'px') {
+            if (scope.task.done) {
+              scope.task.done = false;
+              scope.$apply();
+            } else {
+              // todo: remove
+            }
+          }
+          element.currentTarget.style.marginLeft = 0+'px';
+        });
+      }
+    };
+  })
   
   .controller('TaskCtrl', ['$scope', 'storage', function($scope, storage) {
     $scope.testValue = 'double click me!';
@@ -82,8 +120,6 @@ angular.module('pickerApp')
             $scope.newSortIndexes = newSortIndexes;
             $scope.tasks = TaskSortable._getSorted($scope.tasks, newSortIndexes);
             $scope.$apply();
-            
-            // console.log(localStorage);
           }
         });
       },
@@ -101,21 +137,6 @@ angular.module('pickerApp')
       }
     };
     // TaskSortable.beSortable();
-    
-/*    $scope.dragControlListeners = {
-      accept: function(sourceItemHandleScope, destSortableScope) {
-        return true;
-      },
-      itemMoved: function(event) {
-        console.log('event');
-        // event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.column.name;
-      },
-      orderChanged: function(event) {
-        console.log('event');
-      },
-      containment: '#board'//optional param.
-    };
-*/ 
     
     
     // Sync the variable and the localStorage
@@ -145,7 +166,7 @@ angular.module('pickerApp')
     
     // Add new task
     $scope.addNew = function() {
-      if (!$scope.newTaskBody) return;
+      if (!$scope.newTaskBody) return;  
       $scope.tasks.push({
         'body': $scope.newTaskBody,
         'done': false
@@ -170,47 +191,6 @@ angular.module('pickerApp')
     // Fix clicked task
     $scope.onclickTask = function(index) {
       $scope.tasks[index].done = !$scope.tasks[index].done;
-      
-      // var ele =  document.getElementById('finish');
-      // ele.disabled = 'true';
-      
-      // Check disable of finishing button
-/*      var element = document.getElementById('finish');
-      element.disabled = true;
-      angular.forEach($scope.tasks, function(task) {
-        if (task.done) {
-          element.disabled = false;
-          return;
-        }
-      });*/
-    };
-    
-    $scope.onDoubleTap = function(index) {
-      
-      
-      
-      var clickTarget = this.element.find('span');
-      console.log(clickTarget);
-      var EDITING_PROP = 'editing';
-      if ( !clickTarget.hasClass(EDITING_PROP) ) {
-        clickTarget.addClass(EDITING_PROP);
-        clickTarget.append('<input type="text" value="' + $scope.tasks[index].body + '" />');
-        var inputElement = clickTarget.children();
-        inputElement.on('focus', function() {
-          inputElement.on('blur', function() {
-            var inputValue = inputElement.val() || this.defaultValue;
-            
-            // log(inputValue);
-            
-            clickTarget.removeClass(EDITING_PROP).text(inputValue);
-            inputElement.off();
-            $scope.$apply(function() {
-              $scope.tasks[index].body = inputValue;
-            });
-          });
-        });
-        inputElement[0].focus();
-      }
     };
     
     $scope.onSwipeRight = function(index) {

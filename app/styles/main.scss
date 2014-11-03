@@ -93,7 +93,10 @@ body {
 
 
 
-
+html,
+body {
+  overflow: hidden;
+}
 
 
 button:disabled {
@@ -115,7 +118,7 @@ body {
     color: #ffffff;
   }
   
-  button,input {
+  button, input {
     width: 40px;
     height: 40px;
     margin: 2px;
@@ -129,8 +132,8 @@ body {
 }
 
 .task {
+  position: relative;
   width: 100%;
-  // background: #f53455;
   margin: 0;
   border-top: solid 1px #dddddd;
   border-bottom: solid 1px #dddddd;
@@ -138,19 +141,42 @@ body {
   border-left: none;
   border-radius: 0;
   font-size: 18px;
-  // list-style: none;
-  word-wrap: break-word;
   
-
   $task-margin-right: 32px;
   $task-margin-left: 10px;
+  
+  background-color: #f00;
+  
+  .fix-task,
+  .suspend-task {
+    position: absolute;
+    z-index: 100;
+  }
+  
+  
+  .suspend-task {
+    width: 90px;
+    height: 50px;
+    right: 0px;
+  }
+  
+  .task-movable {
+    position: relative;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 100;
+  
+    &.done-true {
+      background-color: #eeeeee;
+    }
+  }
   
   .task-head {
     width: $task-margin-left;
     float: left;
   }
   
-  .task-header {
+  .task-sort {
     width: $task-margin-right;
     height: 26px;
     // height: 100%;
@@ -160,8 +186,17 @@ body {
   }
 
   .task-body {
-    margin: 0 $task-margin-right 0 $task-margin-left;
+    margin: 0 0 0 $task-margin-left;
     padding: 0 0 0 5px;
+    word-wrap: break-word;
+    
+    &.done-true {
+      text-decoration: line-through;
+    }
+
+    &.sortable-true {
+      margin-right: $task-margin-right;
+    }
     
     p {
       margin: 0;
@@ -169,61 +204,41 @@ body {
     
     textarea {
       width: 100%;
-      margin: 0 0 -8px 0;
+      margin: 0 0 -7px 0;
       padding: 0;
+      border: none;
       resize: none;
     }
   }
 }
 
-.sortable-ghost {
-  background: #dddddd;
-}
 
-.example-animate-container {
-  background: white;
-  border: 1px solid black;
-  list-style: none;
-  margin: 0;
-  padding: 0 10px;
+.animate-repeat.ng-move {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
 }
-.animate-repeat {
-  line-height: 40px;
-  list-style: none;
-  box-sizing: border-box;
-}
-// .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-  -webkit-transition: all linear 0.5s;
-  transition:all linear 0.5s;
+  // -webkit-transition: all linear 0.5s;
+  // transition: all linear 0.5s;
 }
 
 // .animate-repeat.ng-move,
 .animate-repeat.ng-enter {
-  max-height: 0;
+  // max-height: 0;
 }
 
 .animate-repeat.ng-leave.ng-leave-active {
-  opacity: 0;
-  margin-left: 400px;
+  // opacity: 0;
+  // margin-left: 400px;
 }
 
-.animate-repeat.ng-leave,
+// .animate-repeat.ng-leave,
 // .animate-repeat.ng-move.ng-move-active,
 .animate-repeat.ng-enter.ng-enter-active {
   opacity: 1;
-  max-height:40px;
+  // max-height: 40px;
 }
-
-
-.done-true {
-  text-decoration: line-through;
-}
-
-.task-check {
-  float: right;
-} 
 
 #input-task {
   width: 75%;
@@ -235,9 +250,16 @@ body {
 }
 
 #finish {
-  position:fixed;
+  position: fixed;
   bottom: 10px;
   left: 10px;
   width: 44px;
   height: 44px;
+}
+
+
+.task-header {
+  width: 26px;
+  height: 26px;
+  float: left;
 }

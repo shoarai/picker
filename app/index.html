@@ -43,26 +43,30 @@
       
       <!-- Task list -->
       <div data-ng-model="tasks" data-as-sortable="board.dragControlListeners">
-        <div class="task" data-ng-repeat="task in tasks" data-as-sortable-item>
-          <div class="task-head">・</div>
-          <div class="task-header" ng-show="sortable" data-as-sortable-item-handle></div>
-          <div class="task-body done-{{task.done}}"
-               myng-editable
-               ng-click="onclickTask($index)"
-               hm-double-tap="editable=true">
-            <p ng-bind-html="task.body | noHTML | newlines" ng-hide="editable"></p>
-            <textarea ng-model="task.body" ng-show="editable"
-                      ng-blur="editable=false"
-                      focus-on-visibility msd-elastic></textarea>
-          <!-- <a href ng-click="remove($index)">[x]</a> -->
+        <!-- Task -->
+        <div class="task animate-repeat" data-ng-repeat="task in tasks" data-as-sortable-item>
+          <div class="fix-task">fix</div>
+          <div move-task class="task-movable done-{{task.done}}">
+            <div class="task-head">・</div>
+            <div class="task-sort" ng-show="sortable" data-as-sortable-item-handle></div>
+            <div class="task-body done-{{task.done}} sortable-{{sortable}}"
+                 myng-editable
+                 ng-click="onclickTask($index)"
+                 hm-double-tap="editable=true">
+              <p ng-bind-html="task.body | noHTML | newlines" ng-hide="editable"></p>
+              <textarea ng-model="task.body" ng-show="editable"
+                        ng-blur="editable=false"
+                        focus-on-visibility msd-elastic></textarea>
+            <!-- <a href ng-click="remove($index)">[x]</a> -->
+            </div>
           </div>
+          <div class="suspend-task">suspend</div>
         </div>
       </div>
       
       
       
-      <!-- 
-      <p>■■■<br>■■■<br>■■■<br>■■■<br>■■■</p>
+      <!-- <p>■■■<br>■■■<br>■■■<br>■■■<br>■■■</p>
       <ul id="tasks">
         <li class="task done-{{task.done}} animate-repeat"
             ng-repeat="task in tasks" data-index="{{$index}}"
@@ -73,7 +77,9 @@
                 hm-double-tap="onDoubleTap()" hm-drag-start="onSwipeRight($index)"
                 hm-drag-end="onSwipeRight($index)"></span>
         </li>
-      </ul>-->
+      </ul> -->
+      
+      
       <button id="finish" ng-click="deleteDone()">finish</button>
     </div>
      
@@ -99,10 +105,18 @@
 
 
     <script>
-      window.log = function() {
-        console.log.apply(console, arguments);
+      var myConsole = function(debugMode) { 
+        if (debugMode) {
+          window.log = function() {
+            console.log.apply(console, arguments);
+          };
+        } else {
+          window.log = function() {};
+          console.log = function() {};
+          window.alert = function() {};
+        }
       };
-      
+      myConsole(true);
       window.onload = function() {
         // log(localStorage);
       };
