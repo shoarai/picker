@@ -98,13 +98,16 @@ body {
   overflow: hidden;
 }
 
+body {
+  padding: 0;
+}
+
+button {
+  // -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 
 button:disabled {
   opacity: 0.8;
-}
-
-body {
-  padding: 0;
 }
 
 #header {
@@ -145,17 +148,25 @@ body {
   $task-margin-right: 32px;
   $task-margin-left: 10px;
   
-  background-color: #f00;
+  $done-color: #40AAEF;
+  $fix-color: #58BE89;
+  $suspend-color: #F27398;
   
+  background-color: $suspend-color;
+  
+  .done-task,
   .fix-task,
-  .suspend-task {
+  .suspend-task,
+  .back-task {
     position: absolute;
+    width: 90px;
     z-index: 100;
+    text-align: center;
+    color: #ffffff;
   }
   
-  
-  .suspend-task {
-    width: 90px;
+  .suspend-task,
+  .back-task {
     height: 50px;
     right: 0px;
   }
@@ -213,6 +224,22 @@ body {
 }
 
 
+#finish {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 44px;
+  height: 44px;
+  background-color: #58BE89;
+  border: none;
+  border:1px solid #000;
+  border-radius: 22px;
+  color: #ffffff;
+  box-shadow: 0 0 10px 1px #666;
+  z-index: 1000;
+  text-align: center;
+}
+
 .animate-repeat.ng-move {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s;
@@ -247,14 +274,6 @@ body {
 #add-task {
   width: 20%;
   float: right;
-}
-
-#finish {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  width: 44px;
-  height: 44px;
 }
 
 

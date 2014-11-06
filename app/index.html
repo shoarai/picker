@@ -45,23 +45,24 @@
       <div data-ng-model="tasks" data-as-sortable="board.dragControlListeners">
         <!-- Task -->
         <div class="task animate-repeat" data-ng-repeat="task in tasks" data-as-sortable-item>
-          <div class="fix-task">fix</div>
+          <div class="done-task" ng-hide="task.done">解　決</div>
+          <div class="fix-task" ng-show="task.done">終　了</div>
           <div move-task class="task-movable done-{{task.done}}">
             <div class="task-head">・</div>
             <div class="task-sort" ng-show="sortable" data-as-sortable-item-handle></div>
             <div class="task-body done-{{task.done}} sortable-{{sortable}}"
                  myng-editable
-                 ng-click="onclickTask($index)"
                  hm-double-tap="editable=true">
               <p ng-bind-html="task.body | noHTML | newlines" ng-hide="editable"></p>
               <textarea ng-model="task.body" ng-show="editable"
                         ng-blur="editable=false"
                         focus-on-visibility msd-elastic></textarea>
-            <!-- <a href ng-click="remove($index)">[x]</a> -->
             </div>
           </div>
-          <div class="suspend-task">suspend</div>
+          <div class="suspend-task" ng-hide="task.done">保　留</div>
+          <div class="back-task" ng-show="task.done">未解決</div>
         </div>
+        <button id="finish" ng-click="deleteDone()">finish</button>
       </div>
       
       
@@ -80,7 +81,6 @@
       </ul> -->
       
       
-      <button id="finish" ng-click="deleteDone()">finish</button>
     </div>
      
     

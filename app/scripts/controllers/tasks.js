@@ -37,9 +37,9 @@ angular.module('pickerApp')
   })
   
   
-  .directive('moveTask', function () {
+  .directive('taskMovable', function () {
     return {
-      restrict: 'A',
+      restrict: 'C',
       link    : function(scope, element, attrs) {
         var startLeft = 0;
         var maxLeft = 90;
@@ -49,7 +49,7 @@ angular.module('pickerApp')
           startLeft = element.originalEvent.changedTouches[0].clientX;
         });
         element.on('touchmove', function(element) {
-          var left = startLeft - element.originalEvent.changedTouches[0].clientX;
+          var left = element.originalEvent.changedTouches[0].clientX - startLeft;
           left *= 1.2;
           if (maxLeft < left) {
             left = maxLeft;
