@@ -44,11 +44,18 @@ angular.module('pickerApp')
         var startLeft = 0;
         var maxLeft = 90;
         var minLeft = -90;
+        var scrollCount = 0;    // 上下スクロールの場合touchmoveは一度しか起こらないため2回目以降のmoveで処理を許可する
         
         element.on('touchstart', function(element) {
+          scrollCount = 0;
           startLeft = element.originalEvent.changedTouches[0].clientX;
+          log('touchstart');
         });
         element.on('touchmove', function(element) {
+          if (scrollCount < 2) {
+            scrollCount++;
+            return;
+          }
           var left = element.originalEvent.changedTouches[0].clientX - startLeft;
           left *= 1.2;
           if (maxLeft < left) {
@@ -57,6 +64,7 @@ angular.module('pickerApp')
             left = minLeft;
           }
           element.currentTarget.style.marginLeft = left+'px';
+          log('touchmove');
         });
         element.on('touchend', function(element) {
           var left = element.currentTarget.style.marginLeft;
@@ -77,29 +85,18 @@ angular.module('pickerApp')
             }
           }
           element.currentTarget.style.marginLeft = 0+'px';
+          log('touchend');
         });
       }
     };
   })
   
-  .controller('TaskCtrl', ['$scope', 'storage', function($scope, storage) {
-    $scope.testValue = 'double click me!';
-    
-    var taskElements = document.getElementsByClassName('task');
-    var i = 0;
-    for (; i < taskElements.length; i++) {
-      console.log(element);
-      taskElements[i].onclick = function() {
-        alert('test');
-      };
-    };
-    
-    
+  .controller('TaskCtrl', ['$scope', 'storage', function($scope, storage) {    
     /**
      * Task sortable object
      * https://github.com/RubaXa/Sortable
      */
-    var TaskSortable = {
+/*    var TaskSortable = {
       sortable: {},
       beSortable: function() {
         var mySort = document.getElementById('tasks');
@@ -136,8 +133,8 @@ angular.module('pickerApp')
         return result;
       }
     };
-    // TaskSortable.beSortable();
-    
+    TaskSortable.beSortable();
+*/
     
     // Sync the variable and the localStorage
     storage.bind($scope, 'tasks', {defaultValue: [], storeName: 'tasks'});
@@ -149,7 +146,6 @@ angular.module('pickerApp')
       // {'body':'do this 3', 'done':true},
       // {'body':'do this 4', 'done':false},
     // ];
-    
     
     //  for debug: Add new tasks
     $scope.testAdd = function() {
@@ -173,11 +169,6 @@ angular.module('pickerApp')
       });
       $scope.newTaskBody = '';
     };
-        
-    // Delete a task
-    $scope.remove = function(index) {
-      $scope.tasks.splice(index, 1);
-    };
     
     // Delete fixed tasks
     $scope.deleteDone = function() {
@@ -186,16 +177,6 @@ angular.module('pickerApp')
       angular.forEach(oldTasks, function(task) {
         if (!task.done) $scope.tasks.push(task);
       });
-    };
-    
-    // Fix clicked task
-    $scope.onclickTask = function(index) {
-      $scope.tasks[index].done = !$scope.tasks[index].done;
-    };
-    
-    $scope.onSwipeRight = function(index) {
-      console.log(index);
-      alert('onSwipeRight');
     };
     
     $scope.awesomeThings = [
