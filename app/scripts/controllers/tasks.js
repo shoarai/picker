@@ -31,6 +31,14 @@ angular.module('pickerApp')
       scope.$watch('editable', function () {
         if (scope.editable === true) {
           element.focus();
+          
+          // Prohibit blank of task body
+          element.on('blur', function(element) {
+            if (scope.task.body !== '') return;
+            log('splice');
+            scope.tasks.splice(scope.index(), 1);
+            scope.$apply();
+          });
         }
       });
     };
@@ -140,12 +148,14 @@ angular.module('pickerApp')
     storage.bind($scope, 'tasks', {defaultValue: [], storeName: 'tasks'});
     
     // for debug: init task
-    // $scope.tasks = [
-      // {'body':'do this 1', 'done':false},
-      // {'body':'do this 2', 'done':false},
-      // {'body':'do this 3', 'done':true},
-      // {'body':'do this 4', 'done':false},
-    // ];
+//     $scope.tasks = [
+//       {'body':'do this 1', 'done':false},
+//       {'body':'do this 2', 'done':false},
+//       {'body':'do this 3', 'done':true},
+//       {'body':'do this 4', 'done':false},
+//     ];
+    
+//    log($scope.tasks);
     
     //  for debug: Add new tasks
     $scope.testAdd = function() {
