@@ -35,7 +35,6 @@ angular.module('pickerApp')
           // Prohibit blank of task body
           element.on('blur', function(element) {
             if (scope.task.body !== '') return;
-            log('splice');
             scope.tasks.splice(scope.index(), 1);
             scope.$apply();
           });
@@ -44,7 +43,10 @@ angular.module('pickerApp')
     };
   })
   
-  
+  /**
+   * Fix, finish or hold a task by swipe
+   * @returns {tasks_L50.tasksAnonym$0}
+   */
   .directive('taskMovable', function () {
     return {
       restrict: 'C',
@@ -188,6 +190,16 @@ angular.module('pickerApp')
         if (!task.done) $scope.tasks.push(task);
       });
     };
+    
+    
+//    $scope.onClickAddTask = function(index) {
+//      var newTask = {
+//        'body': 'default',
+//        'done': false
+//      };
+//      $scope.tasks.splice(index+2, 0, newTask);
+//    };
+    
     
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
